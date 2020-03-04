@@ -12,13 +12,48 @@ const functions = require('firebase-functions');
 const app = dialogflow({debug: true});
 
 const afbeeldingen = {
-  hond: {
+  olifant: {
     title: 'Welk dier zie je op deze afbeelding?',
     text: '',
     image: {
-      url:
-        'https://i0.wp.com/yourdog.nl/wp-content/uploads/2015/04/labrador.png',
-      accessibilityText: 'Afbeelding van een hond.', // Feels very weird to put the answer here.
+      url: 'https://i.imgur.com/zSlpjgE.png',
+      accessibilityText: 'Afbeelding van een olifant.', // Feels very weird to put the answer here.
+    },
+    display: 'WHITE',
+  },
+  aap: {
+    title: 'Welk dier zie je op deze afbeelding?',
+    text: '',
+    image: {
+      url: 'https://i.imgur.com/Ga45v27.png',
+      accessibilityText: 'Afbeelding van een aap.', // Feels very weird to put the answer here.
+    },
+    display: 'WHITE',
+  },
+  leeuw: {
+    title: 'Welk dier zie je op deze afbeelding?',
+    text: '',
+    image: {
+      url: 'https://i.imgur.com/N1PEPuR.png',
+      accessibilityText: 'Afbeelding van een leeuw.', // Feels very weird to put the answer here.
+    },
+    display: 'WHITE',
+  },
+  giraffe: {
+    title: 'Welk dier zie je op deze afbeelding?',
+    text: '',
+    image: {
+      url: 'https://i.imgur.com/bKc1IJI.png',
+      accessibilityText: 'Afbeelding van een giraffe.', // Feels very weird to put the answer here.
+    },
+    display: 'WHITE',
+  },
+  zebra: {
+    title: 'Welk dier zie je op deze afbeelding?',
+    text: '',
+    image: {
+      url: 'https://i.imgur.com/yDwlpAQ.png',
+      accessibilityText: 'Afbeelding van een zebra.', // Feels very weird to put the answer here.
     },
     display: 'WHITE',
   },
@@ -26,26 +61,68 @@ const afbeeldingen = {
 
 // Handle the create_name intent//
 app.intent('create_name', (conv, {name}) => {
-  // Construct the conversational response//
   conv.user.storage.name = name;
   conv.ask(
-    'Leuk je te ontmoeten ' + name + '. Wil je met mij een quiz spelen?',
-    new BasicCard(afbeeldingen['hond'])
+    'Leuk je te ontmoeten ' +
+      name +
+      '. Vandaag gaan we het hebben over dieren uit de dierentuin. dit is een olifant. Kan je olifant zeggen?',
+    new BasicCard(afbeeldingen['olifant'])
   );
-  conv.ask(new Suggestions('Ja', 'Nee'));
 });
 
-app.intent('what_animal'),
-  (conv) => {
-    conv.ask('Welk dier zie je hier?', new BasicCard(afbeeldingen['hond']));
-  };
-
-// Poging tot stoerdoenerij
-app.intent('keuze_hond', (conv, {hond}) => {
-  // Construct the conversational response//
-  conv.close(
-    `Dat klopt ${conv.user.storage.name}! Het was inderdaad een hond. Bedankt voor het spelen.`
+app.intent('did_elephant', (conv, {olifant}) => {
+  conv.ask(
+    'Goed zo ' + conv.user.storage.name + '! Een olifant. Dit is een zebra',
+    new BasicCard(afbeeldingen['zebra'])
   );
+});
+
+app.intent('did_zebra', (conv, {zebra}) => {
+  conv.ask(
+    'Goed zo ' + conv.user.storage.name + '! Een zebra. Dit is een aap',
+    new BasicCard(afbeeldingen['aap'])
+  );
+});
+
+app.intent('did_monkey', (conv, {aap}) => {
+  conv.ask(
+    'Goed zo ' + conv.user.storage.name + '! Een aap. Dit is een giraffe',
+    new BasicCard(afbeeldingen['giraffe'])
+  );
+});
+
+app.intent('did_giraffe', (conv, {giraffe}) => {
+  conv.ask(
+    'Goed zo ' + conv.user.storage.name + '! Een giraffe. Dit is een leeuw',
+    new BasicCard(afbeeldingen['leeuw'])
+  );
+});
+
+app.intent('did_leeuw', (conv, {leeuw}) => {
+  conv.close(
+    'Goed zo ' +
+      conv.user.storage.name +
+      '! Een leeuw. Nu weet je alle woordjes!'
+  );
+});
+
+app.fallback((conv) => {
+  // intent contains the name of the intent
+  // you defined in the Intents area of Dialogflow
+
+  conv.ask('Kan jij het woord zeggen?');
+
+  /*
+  const intent = conv.intent;
+  switch (intent) {
+    case create_name:
+      conv.ask('Kan jij het woord olifant zeggen?');
+      break;
+    case did_elephant:
+      conv.close('Kan jij het woord zebra zeggen?');
+      break;
+  }
+  */
 });
 
 // Set the DialogflowApp object to handle the HTTPS POST request//

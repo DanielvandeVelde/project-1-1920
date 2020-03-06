@@ -1,6 +1,6 @@
 # Voice User Interface using Google Assistant
 
-<kbd>![Shiny front-end](https://raw.githubusercontent.com/DanielvandeVelde/project-1-1920/master/main.jpg "Shiny front-end")</kbd>
+<kbd>![Shiny front-end](https://raw.githubusercontent.com/DanielvandeVelde/project-1-1920/master/images/main.jpg "Shiny front-end")</kbd>
 
 ## Install ?
 
